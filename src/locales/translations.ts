@@ -23,8 +23,8 @@ export const translations = {
         breathwork: 'Дыхательные практики',
         bodyScan: 'Сканирование тела',
         morningMeditation: 'Утренняя медитация',
-        rain: 'Звук дождя',
-        ocean: 'Звук океана',
+        rain: 'Мягкий фон',
+        ocean: 'Звуки природы',
         forest: 'Звук леса'
       }
     },
@@ -172,8 +172,8 @@ export const translations = {
         breathwork: 'Breathwork',
         bodyScan: 'Body Scan',
         morningMeditation: 'Morning Meditation',
-        rain: 'Rain Sounds',
-        ocean: 'Ocean Waves',
+        rain: 'Ambient Sounds',
+        ocean: 'Nature Sounds',
         forest: 'Forest Sounds'
       }
     },
