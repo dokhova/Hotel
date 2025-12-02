@@ -13,7 +13,7 @@ export default function App() {
       <div 
         className="fixed inset-0 bg-cover bg-center pointer-events-none z-0"
         style={{ 
-          backgroundImage: `url(/img/background.png)`,
+          backgroundImage: `url(/img/cover.jpg)`,
           opacity: 0.2
         }}
       />
