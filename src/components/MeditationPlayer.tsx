@@ -1,6 +1,6 @@
-import { Play, Heart, SkipBack, SkipForward, ChevronDown } from "lucide-react";
+import { Play, Heart, SkipBack, SkipForward, ChevronDown, Pause } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../locales/translations";
 import meditationCover from "figma:asset/0ef9c37e8b80428ef1d916aeecdd30c5e4e760da.png";
@@ -11,6 +11,7 @@ export function MeditationPlayer() {
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const meditations = [
     {
@@ -19,6 +20,7 @@ export function MeditationPlayer() {
       duration: language === 'ru' ? "10 мин" : "10 min",
       image: meditationCover,
       gradient: "linear-gradient(100deg, #A8D531 0%, #34A853 100%)",
+      audioSrc: language === 'ru' ? "/mp3/pause_ru.mp3" : "/mp3/pause_en.mp3",
     },
     {
       id: 2,
@@ -26,6 +28,7 @@ export function MeditationPlayer() {
       duration: language === 'ru' ? "15 мин" : "15 min",
       image: meditationCover,
       gradient: "linear-gradient(100deg, #FFE45A 0%, #FFD527 100%)",
+      audioSrc: "/mp3/ambient.mp3",
     },
     {
       id: 3,
@@ -33,8 +36,38 @@ export function MeditationPlayer() {
       duration: language === 'ru' ? "20 мин" : "20 min",
       image: meditationCover,
       gradient: "linear-gradient(100deg, #7EB6FF 0%, #4285F4 100%)",
+      audioSrc: "/mp3/nature.mp3",
     },
   ];
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.src = meditations[currentTrack].audioSrc;
+      if (isPlaying) {
+        audioRef.current.play().catch(() => setIsPlaying(false));
+      }
+    }
+  }, [currentTrack]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(() => setIsPlaying(false));
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleTrackChange = (trackIndex: number) => {
+    setCurrentTrack(trackIndex);
+    setIsExpanded(false);
+    setIsPlaying(true);
+  };
 
   return (
     <div className="space-y-4">
@@ -67,10 +100,7 @@ export function MeditationPlayer() {
               <div 
                 key={meditation.id}
                 className="flex gap-4 items-center p-3 rounded-2xl hover:bg-white/[0.05] transition-colors cursor-pointer"
-                onClick={() => {
-                  setCurrentTrack(meditation.id - 1);
-                  setIsExpanded(false);
-                }}
+                onClick={() => handleTrackChange(meditation.id - 1)}
               >
                 <div 
                   className="relative w-12 h-12 rounded-full flex-shrink-0 overflow-hidden"
@@ -110,10 +140,14 @@ export function MeditationPlayer() {
             <SkipBack className="w-6 h-6" />
           </button>
           <button 
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={handlePlayPause}
             className="w-14 h-14 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center transition-all hover:bg-white/15"
           >
-            <Play className="w-6 h-6 text-white ml-0.5" fill={isPlaying ? "currentColor" : "none"} />
+            {isPlaying ? (
+              <Pause className="w-6 h-6 text-white" fill="currentColor" />
+            ) : (
+              <Play className="w-6 h-6 text-white ml-0.5" />
+            )}
           </button>
           <button 
             onClick={() => setCurrentTrack(prev => prev < meditations.length - 1 ? prev + 1 : 0)}
@@ -123,6 +157,8 @@ export function MeditationPlayer() {
           </button>
         </div>
       </div>
+      
+      <audio ref={audioRef} loop />
     </div>
   );
 }
