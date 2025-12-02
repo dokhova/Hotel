@@ -11,6 +11,8 @@ export function MeditationPlayer() {
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const meditations = [
@@ -43,6 +45,7 @@ export function MeditationPlayer() {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.src = meditations[currentTrack].audioSrc;
+      setCurrentTime(0);
       if (isPlaying) {
         audioRef.current.play().catch(() => setIsPlaying(false));
       }
@@ -59,6 +62,22 @@ export function MeditationPlayer() {
     }
   }, [isPlaying]);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('loadedmetadata', updateDuration);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateTime);
+      audio.removeEventListener('loadedmetadata', updateDuration);
+    };
+  }, []);
+
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
@@ -68,6 +87,15 @@ export function MeditationPlayer() {
     setIsExpanded(false);
     setIsPlaying(true);
   };
+
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="space-y-4">
@@ -123,13 +151,20 @@ export function MeditationPlayer() {
           </div>
         )}
 
-        <div className="bg-white/[0.08] rounded-full h-1 mb-5">
-          <div 
-            className="h-full rounded-full w-1/3"
-            style={{
-              background: meditations[currentTrack].gradient
-            }}
-          ></div>
+        <div className="space-y-2 mb-5">
+          <div className="bg-white/[0.08] rounded-full h-1">
+            <div 
+              className="h-full rounded-full transition-all duration-100"
+              style={{
+                background: meditations[currentTrack].gradient,
+                width: `${progress}%`
+              }}
+            ></div>
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground px-1">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
         </div>
 
         <div className="flex items-center justify-center gap-6">

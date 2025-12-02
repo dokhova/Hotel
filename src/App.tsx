@@ -4,7 +4,6 @@ import { WeatherCard } from "./components/WeatherCard";
 import { MeditationPlayer } from "./components/MeditationPlayer";
 import { HotelServices } from "./components/HotelServices";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import backgroundImage from "figma:asset/b669f2d0e1bf89c0c107ee3dcd06cab69addb944.png";
 
 export default function App() {
   return (
@@ -14,7 +13,7 @@ export default function App() {
       <div 
         className="fixed inset-0 bg-cover bg-center pointer-events-none z-0"
         style={{ 
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(/img/background.png)`,
           opacity: 0.2
         }}
       />
