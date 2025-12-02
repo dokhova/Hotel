@@ -35,15 +35,15 @@ function ServiceCard({ icon, title, categories, hours, isExpanded, onToggle }: S
     >
       <div className="flex flex-col items-start space-y-3 w-full">
         <div className="flex items-center justify-between w-full">
-          <div className={`${isExpanded ? "text-primary" : "text-white"}`}>{icon}</div>
-          <div className={`text-white/50 transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
+          <div className={`transition-all ${isExpanded ? "text-primary opacity-90" : "text-white opacity-60"}`}>{icon}</div>
+          <div className={`text-white/40 transition-all ${isExpanded ? 'rotate-180 text-white/60' : ''}`}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
         </div>
         <div className="w-full space-y-1">
-          <div className={`text-xs uppercase tracking-wide ${isExpanded ? "text-primary" : "text-muted-foreground"}`}>
+          <div className={`text-xs uppercase tracking-wide transition-colors ${isExpanded ? "text-primary/80" : "text-muted-foreground"}`}>
             {hours}
           </div>
           <div className="text-white text-lg font-normal">
@@ -76,7 +76,7 @@ function ServiceDetails({ categories, buttonType }: { categories: Category[]; bu
             onClick={() => setActiveCategory(category.id)}
             className={`px-4 py-2 rounded-full text-sm transition-all ${
               activeCategory === category.id
-                ? 'bg-[#34A853] text-white'
+                ? 'bg-[#34A853]/80 text-white'
                 : 'bg-white/5 text-white/70 hover:bg-white/10'
             }`}
           >
@@ -101,7 +101,7 @@ function ServiceDetails({ categories, buttonType }: { categories: Category[]; bu
             </div>
             <div className="flex items-center justify-between">
               <p className="text-white text-lg">{service.price}</p>
-              <button className="px-6 py-2 rounded-full bg-[#34A853] text-white text-sm hover:bg-[#2d9045] transition-colors">
+              <button className="px-6 py-2 rounded-full bg-[#34A853]/80 text-white text-sm hover:bg-[#34A853]/90 transition-colors">
                 {buttonType === 'book' ? t.bookService : t.orderService}
               </button>
             </div>
