@@ -6,7 +6,8 @@ export const translations = {
     },
     greeting: {
       title: 'Добрый день, Алекс',
-      subtitle: 'Добро пожаловать в ваш номер'
+      subtitle: '22 Апреля, Среда',
+      temperature: '26°'
     },
     weather: {
       lightRain: 'Дождь',
@@ -37,7 +38,7 @@ export const translations = {
       serviceNames: {
         spa: 'SPA',
         yoga: 'Йога',
-        roomService: 'Сервис номеров',
+        roomService: 'Питание',
         laundry: 'Прачечная'
       },
       categories: {
@@ -155,7 +156,8 @@ export const translations = {
     },
     greeting: {
       title: 'Good afternoon, Alex',
-      subtitle: 'Welcome to your room'
+      subtitle: 'April 22, Wednesday',
+      temperature: '26°'
     },
     weather: {
       lightRain: 'Rain',
@@ -186,7 +188,7 @@ export const translations = {
       serviceNames: {
         spa: 'SPA',
         yoga: 'Yoga',
-        roomService: 'Room Service',
+        roomService: 'Dining',
         laundry: 'Laundry'
       },
       categories: {

@@ -1,6 +1,5 @@
 import { Header } from "./components/Header";
 import { Greeting } from "./components/Greeting";
-import { WeatherCard } from "./components/WeatherCard";
 import { MeditationPlayer } from "./components/MeditationPlayer";
 import { HotelServices } from "./components/HotelServices";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -24,11 +23,8 @@ export default function App() {
             {/* Header */}
             <Header />
             
-            {/* Greeting + Weather in one row */}
-            <div className="flex items-start justify-between gap-6">
-              <Greeting />
-              <WeatherCard />
-            </div>
+            {/* Greeting */}
+            <Greeting />
             
             {/* Main content - single column */}
             <MeditationPlayer />
@@ -44,11 +40,8 @@ export default function App() {
             <Header />
           </div>
           
-          <main className="pb-24 pt-6 space-y-8">
-            <div className="space-y-4">
-              <Greeting />
-              <WeatherCard />
-            </div>
+          <main className="pb-24 pt-6 space-y-12">
+            <Greeting />
             <MeditationPlayer />
             <HotelServices />
           </main>

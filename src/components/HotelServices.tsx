@@ -20,10 +20,9 @@ interface ServiceCardProps {
   icon: React.ReactNode;
   title: string;
   categories: Category[];
-  hours: string;
 }
 
-function ServiceCard({ icon, title, categories, hours, isExpanded, onToggle }: ServiceCardProps & { isExpanded: boolean; onToggle: () => void }) {
+function ServiceCard({ icon, title, categories, isExpanded, onToggle }: ServiceCardProps & { isExpanded: boolean; onToggle: () => void }) {
   return (
     <button
       onClick={onToggle}
@@ -33,7 +32,7 @@ function ServiceCard({ icon, title, categories, hours, isExpanded, onToggle }: S
           : "bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]"
       }`}
     >
-      <div className="flex flex-col items-start space-y-3 w-full">
+      <div className="flex flex-col items-start space-y-5 w-full">
         <div className="flex items-center justify-between w-full">
           <div className={`transition-all ${isExpanded ? "text-primary opacity-90" : "text-white opacity-60"}`}>{icon}</div>
           <div className={`text-white/40 transition-all ${isExpanded ? 'rotate-180 text-white/60' : ''}`}>
@@ -42,11 +41,8 @@ function ServiceCard({ icon, title, categories, hours, isExpanded, onToggle }: S
             </svg>
           </div>
         </div>
-        <div className="w-full space-y-1">
-          <div className={`text-xs uppercase tracking-wide transition-colors ${isExpanded ? "text-primary/80" : "text-muted-foreground"}`}>
-            {hours}
-          </div>
-          <div className="text-white text-lg font-normal">
+        <div className="w-full">
+          <div className="text-white text-lg font-normal whitespace-nowrap">
             {title}
           </div>
         </div>
@@ -297,10 +293,10 @@ export function HotelServices() {
   ];
 
   const services = [
-    { id: 'spa', icon: <Sparkles className="w-6 h-6" />, title: t.serviceNames.spa, categories: spaCategories, hours: '9:00 - 21:00', buttonType: 'book' as const },
-    { id: 'yoga', icon: <Dumbbell className="w-6 h-6" />, title: t.serviceNames.yoga, categories: yogaCategories, hours: '7:00 - 19:00', buttonType: 'book' as const },
-    { id: 'room-service', icon: <UtensilsCrossed className="w-6 h-6" />, title: t.serviceNames.roomService, categories: roomServiceCategories, hours: '24/7', buttonType: 'order' as const },
-    { id: 'laundry', icon: <Shirt className="w-6 h-6" />, title: t.serviceNames.laundry, categories: laundryCategories, hours: '8:00 - 20:00', buttonType: 'order' as const },
+    { id: 'spa', icon: <Sparkles className="w-6 h-6" />, title: t.serviceNames.spa, categories: spaCategories, buttonType: 'book' as const },
+    { id: 'yoga', icon: <Dumbbell className="w-6 h-6" />, title: t.serviceNames.yoga, categories: yogaCategories, buttonType: 'book' as const },
+    { id: 'room-service', icon: <UtensilsCrossed className="w-6 h-6" />, title: t.serviceNames.roomService, categories: roomServiceCategories, buttonType: 'order' as const },
+    { id: 'laundry', icon: <Shirt className="w-6 h-6" />, title: t.serviceNames.laundry, categories: laundryCategories, buttonType: 'order' as const },
   ];
 
   return (
@@ -313,7 +309,6 @@ export function HotelServices() {
             icon={service.icon}
             title={service.title}
             categories={service.categories}
-            hours={service.hours}
             isExpanded={expandedService === service.id}
             onToggle={() => setExpandedService(expandedService === service.id ? null : service.id)}
           />
