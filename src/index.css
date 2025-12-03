@@ -400,6 +400,10 @@
     pointer-events: none;
   }
 
+  .absolute {
+    position: absolute;
+  }
+
   .fixed {
     position: fixed;
   }
@@ -410,6 +414,18 @@
 
   .inset-0 {
     inset: calc(var(--spacing) * 0);
+  }
+
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
+
+  .right-0 {
+    right: calc(var(--spacing) * 0);
+  }
+
+  .left-0 {
+    left: calc(var(--spacing) * 0);
   }
 
   .z-0 {
@@ -837,6 +853,10 @@
     background-position: center;
   }
 
+  .bg-top {
+    background-position: top;
+  }
+
   .p-3 {
     padding: calc(var(--spacing) * 3);
   }
@@ -1113,6 +1133,12 @@
   @media (hover: hover) {
     .hover\:opacity-70:hover {
       opacity: .7;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:block {
+      display: block;
     }
   }
 

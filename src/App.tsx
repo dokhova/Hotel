@@ -8,12 +8,23 @@ export default function App() {
   return (
     <LanguageProvider>
     <div className="min-h-screen bg-background relative">
-      {/* Background image overlay */}
+      {/* Background image overlay - fixed for desktop */}
       <div 
-        className="fixed inset-0 bg-cover bg-center pointer-events-none z-0"
+        className="hidden lg:block fixed inset-0 bg-cover bg-center pointer-events-none z-0"
         style={{ 
           backgroundImage: `url(/img/cover.jpg)`,
           opacity: 0.2,
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
+        }}
+      />
+      {/* Background image overlay - absolute for mobile */}
+      <div 
+        className="lg:hidden absolute top-0 left-0 right-0 bg-cover bg-top pointer-events-none z-0"
+        style={{ 
+          backgroundImage: `url(/img/cover.jpg)`,
+          opacity: 0.2,
+          height: '100vh',
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden'
         }}
