@@ -13,7 +13,9 @@ export default function App() {
         className="fixed inset-0 bg-cover bg-center pointer-events-none z-0"
         style={{ 
           backgroundImage: `url(/img/cover.jpg)`,
-          opacity: 0.2
+          opacity: 0.2,
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
         }}
       />
       {/* Desktop/Web Layout */}
