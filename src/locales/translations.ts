@@ -11,7 +11,7 @@ export const translations = {
     },
     weather: {
       lightRain: 'Дождь',
-      city: 'Астана',
+      city: 'Астана, Казахстан',
       date: '1 дек'
     },
     meditation: {
@@ -161,7 +161,7 @@ export const translations = {
     },
     weather: {
       lightRain: 'Rain',
-      city: 'Astana',
+      city: 'Astana, Kazakhstan',
       date: 'Dec 1'
     },
     meditation: {

@@ -50,7 +50,7 @@ export function MeditationPlayer() {
         audioRef.current.play().catch(() => setIsPlaying(false));
       }
     }
-  }, [currentTrack]);
+  }, [currentTrack, language]);
 
   useEffect(() => {
     if (audioRef.current) {

@@ -31,13 +31,13 @@ export function Greeting() {
         {/* Right side - Weather */}
         <div className="flex items-center gap-3">
           <CloudRain className="w-8 h-8 text-[#888888] flex-shrink-0" strokeWidth={1.5} />
-          <div>
-            <div className="flex items-center gap-2">
+          <div className="text-right">
+            <div className="flex items-center justify-end gap-2">
               <span className="text-white" style={{ fontSize: '20px', fontWeight: 400, lineHeight: '28px' }}>{w.lightRain}</span>
               <span className="text-white" style={{ fontSize: '20px', fontWeight: 400, lineHeight: '28px' }}>{t.temperature}</span>
             </div>
-            <p className="text-[#888888] text-right" style={{ fontSize: '14px', fontWeight: 400, lineHeight: '20px' }}>
-              {w.city} · {w.date}
+            <p className="text-[#888888]" style={{ fontSize: '14px', fontWeight: 400, lineHeight: '20px' }}>
+              {w.city}
             </p>
           </div>
         </div>
