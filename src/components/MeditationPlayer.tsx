@@ -104,7 +104,7 @@ export function MeditationPlayer() {
       <div className="backdrop-blur-xl bg-white/[0.03] rounded-3xl p-5 border border-white/[0.08] shadow-lg">
         <div className="flex gap-4 items-center mb-5">
           <div 
-            className="relative w-16 h-16 rounded-full flex-shrink-0 overflow-hidden"
+            className="relative w-14 h-14 rounded-full flex-shrink-0 overflow-hidden"
             style={{
               background: meditations[currentTrack].gradient
             }}

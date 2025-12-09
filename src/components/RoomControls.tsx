@@ -23,14 +23,14 @@ function ControlButton({ icon, label, isOn, onToggle }: ControlButtonProps) {
           <div className={`${isOn ? "text-primary" : "text-white"}`}>{icon}</div>
           <div className="relative">
             <div
-              className={`w-11 h-6 rounded-full transition-colors ${
-                isOn ? "bg-primary" : "bg-white/10"
-              }`}
+              className={`w-11 h-6 rounded-full transition-colors ${\
+                isOn ? "bg-primary" : "bg-white/10" \
+              }`}\
             >
               <div
-                className={`absolute top-1 w-4 h-4 rounded-full transition-transform ${
-                  isOn ? "translate-x-6 bg-black" : "translate-x-1 bg-white"
-                }`}
+                className={`absolute top-1 w-3.5 h-3.5 rounded-full transition-transform ${\
+                  isOn ? "translate-x-6 bg-black" : "translate-x-1 bg-white" \
+                }`}\
               />
             </div>
           </div>

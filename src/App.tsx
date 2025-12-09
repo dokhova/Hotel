@@ -31,7 +31,7 @@ export default function App() {
       />
       {/* Desktop/Web Layout */}
       <div className="hidden lg:flex lg:h-screen lg:flex-col relative z-10">
-        <main className="flex-1 overflow-y-auto px-8 pb-8 pt-6">
+        <main className="flex-1 overflow-y-auto px-8 pb-8 pt-3">
           <div className="max-w-4xl mx-auto space-y-8">
             {/* Header */}
             <Header />
@@ -49,7 +49,7 @@ export default function App() {
       {/* Mobile Layout */}
       <div className="lg:hidden min-h-screen relative z-10">
         <div className="max-w-md mx-auto px-4">
-          <div className="pt-8">
+          <div className="pt-4">
             <Header />
           </div>
           
