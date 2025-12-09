@@ -31,7 +31,7 @@ export default function App() {
       />
       {/* Desktop/Web Layout */}
       <div className="hidden lg:flex lg:h-screen lg:flex-col relative z-10">
-        <main className="flex-1 overflow-y-auto px-8 pb-8 pt-3">
+        <main className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
           <div className="max-w-4xl mx-auto space-y-8">
             {/* Header */}
             <Header />
