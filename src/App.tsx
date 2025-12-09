@@ -32,16 +32,22 @@ export default function App() {
       {/* Desktop/Web Layout */}
       <div className="hidden lg:flex lg:h-screen lg:flex-col relative z-10">
         <main className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="max-w-4xl mx-auto">
             {/* Header */}
-            <Header />
+            <div className="mb-1">
+              <Header />
+            </div>
             
             {/* Greeting */}
-            <Greeting />
+            <div className="mb-8">
+              <Greeting />
+            </div>
             
             {/* Main content - single column */}
-            <MeditationPlayer />
-            <HotelServices />
+            <div className="space-y-8">
+              <MeditationPlayer />
+              <HotelServices />
+            </div>
           </div>
         </main>
       </div>
@@ -53,7 +59,7 @@ export default function App() {
             <Header />
           </div>
           
-          <main className="pb-24 pt-6 space-y-12">
+          <main className="pb-24 pt-3 space-y-12">
             <Greeting />
             <MeditationPlayer />
             <HotelServices />
