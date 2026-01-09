@@ -2,12 +2,15 @@ import { Header } from "./components/Header";
 import { Greeting } from "./components/Greeting";
 import { MeditationPlayer } from "./components/MeditationPlayer";
 import { HotelServices } from "./components/HotelServices";
+import { AdBanner } from "./components/AdBanner";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 export default function App() {
   return (
     <LanguageProvider>
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen relative" style={{
+      background: 'linear-gradient(180deg, #1a1a1a 0%, #132A1B 100%)'
+    }}>
       {/* Background image overlay - fixed for desktop */}
       <div 
         className="hidden lg:block fixed inset-0 bg-cover bg-center pointer-events-none z-0"
@@ -47,6 +50,7 @@ export default function App() {
             <div className="space-y-8">
               <MeditationPlayer />
               <HotelServices />
+              <AdBanner />
             </div>
           </div>
         </main>
@@ -63,6 +67,7 @@ export default function App() {
             <Greeting />
             <MeditationPlayer />
             <HotelServices />
+            <AdBanner />
           </main>
         </div>
       </div>

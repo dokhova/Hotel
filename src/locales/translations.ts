@@ -1,7 +1,7 @@
 export const translations = {
   ru: {
     header: {
-      title: 'The Calm Hotel',
+      title: 'Rhythm Court',
       room: 'Номер 405'
     },
     greeting: {
@@ -11,7 +11,7 @@ export const translations = {
     },
     weather: {
       lightRain: 'Дождь',
-      city: 'Астана, Казахстан',
+      city: 'Барселона, Испания',
       date: '1 дек'
     },
     meditation: {
@@ -151,7 +151,7 @@ export const translations = {
   },
   en: {
     header: {
-      title: 'The Calm Hotel',
+      title: 'Rhythm Court',
       room: 'Room 405'
     },
     greeting: {
@@ -161,7 +161,7 @@ export const translations = {
     },
     weather: {
       lightRain: 'Rain',
-      city: 'Astana, Kazakhstan',
+      city: 'Barcelona, Spain',
       date: 'Dec 1'
     },
     meditation: {

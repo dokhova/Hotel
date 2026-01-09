@@ -1,5 +1,4 @@
-import { Play, Heart, SkipBack, SkipForward, ChevronDown, Pause } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Play, Pause, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../locales/translations";
@@ -19,6 +18,7 @@ export function MeditationPlayer() {
     {
       id: 1,
       title: t.items.morningMeditation,
+      subtitle: language === 'ru' ? "Медитация" : "Meditation",
       duration: language === 'ru' ? "10 мин" : "10 min",
       image: meditationCover,
       gradient: "linear-gradient(100deg, #A8D531 0%, #34A853 100%)",
@@ -27,6 +27,7 @@ export function MeditationPlayer() {
     {
       id: 2,
       title: t.items.rain,
+      subtitle: language === 'ru' ? "Звуки природы" : "Nature Sounds",
       duration: language === 'ru' ? "15 мин" : "15 min",
       image: meditationCover,
       gradient: "linear-gradient(100deg, #FFE45A 0%, #FFD527 100%)",
@@ -35,6 +36,7 @@ export function MeditationPlayer() {
     {
       id: 3,
       title: t.items.ocean,
+      subtitle: language === 'ru' ? "Звуки природы" : "Nature Sounds",
       duration: language === 'ru' ? "20 мин" : "20 min",
       image: meditationCover,
       gradient: "linear-gradient(100deg, #7EB6FF 0%, #4285F4 100%)",
@@ -84,7 +86,6 @@ export function MeditationPlayer() {
 
   const handleTrackChange = (trackIndex: number) => {
     setCurrentTrack(trackIndex);
-    setIsExpanded(false);
     setIsPlaying(true);
   };
 
@@ -101,96 +102,109 @@ export function MeditationPlayer() {
     <div className="space-y-4">
       <h2 className="text-white">{t.title}</h2>
 
-      <div className="backdrop-blur-xl bg-white/[0.03] rounded-3xl p-5 border border-white/[0.08] shadow-lg">
-        <div className="flex gap-4 items-center mb-5">
-          <div 
-            className="relative w-12 h-12 rounded-full flex-shrink-0 overflow-hidden"
-            style={{
-              background: meditations[currentTrack].gradient
-            }}
-          >
+      <div className="backdrop-blur-xl bg-white/[0.03] rounded-3xl border border-white/[0.08] shadow-lg overflow-hidden">
+        {/* Compact Header */}
+        <div className="w-full p-4 space-y-3">
+          <div className="flex items-center gap-4">
+            {/* Play Button */}
+            <button 
+              onClick={handlePlayPause}
+              className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-all hover:scale-105"
+              style={{
+                background: meditations[currentTrack].gradient
+              }}
+            >
+              {isPlaying ? (
+                <Pause className="w-5 h-5 text-white" fill="white" />
+              ) : (
+                <Play className="w-5 h-5 text-white" fill="white" />
+              )}
+            </button>
+            
+            {/* Track Info - Clickable area to expand */}
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex-1 min-w-0 text-left hover:opacity-80 transition-opacity"
+            >
+              <h3 className="text-white font-medium truncate">{meditations[currentTrack].title}</h3>
+              <p className="text-muted-foreground text-sm">{meditations[currentTrack].subtitle}</p>
+            </button>
+            
+            {/* Expand Icon */}
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+            >
+              {isExpanded ? (
+                <ChevronUp className="w-6 h-6 text-white/50" />
+              ) : (
+                <ChevronDown className="w-6 h-6 text-white/50" />
+              )}
+            </button>
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-white truncate">{meditations[currentTrack].title}</h3>
-            <p className="text-muted-foreground text-sm">{meditations[currentTrack].duration}</p>
+          
+          {/* Progress Bar - Always visible */}
+          <div className="space-y-1.5">
+            <div className="bg-white/[0.08] rounded-full h-1.5 cursor-pointer"
+              onClick={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                if (audioRef.current && duration) {
+                  audioRef.current.currentTime = percent * duration;
+                }
+              }}
+            >
+              <div 
+                className="h-full rounded-full transition-all duration-100"
+                style={{
+                  background: meditations[currentTrack].gradient,
+                  width: `${progress}%`
+                }}
+              ></div>
+            </div>
+            <div className="flex justify-between text-xs text-muted-foreground px-0.5">
+              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(duration)}</span>
+            </div>
           </div>
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-9 h-9 flex items-center justify-center transition-opacity hover:opacity-70 flex-shrink-0 mr-3"
-          >
-            <ChevronDown className={`w-5 h-5 text-white/50 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-          </button>
         </div>
 
+        {/* Expanded Content */}
         {isExpanded && (
-          <div className="space-y-3 mb-5 pt-2 border-t border-white/[0.08]">
-            {meditations.filter((_, idx) => idx !== currentTrack).map((meditation, idx) => (
-              <div 
-                key={meditation.id}
-                className="flex gap-4 items-center p-3 rounded-2xl hover:bg-white/[0.05] transition-colors cursor-pointer"
-                onClick={() => handleTrackChange(meditation.id - 1)}
-              >
-                <div 
-                  className="relative w-12 h-12 rounded-full flex-shrink-0 overflow-hidden"
-                  style={{
-                    background: meditation.gradient
-                  }}
+          <div className="px-4 pb-4 space-y-4">
+            {/* Track List */}
+            <div className="space-y-2 pt-2 border-t border-white/[0.08]">
+              {meditations.map((meditation, idx) => (
+                <button
+                  key={meditation.id}
+                  className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
+                    idx === currentTrack 
+                      ? 'bg-white/[0.08]' 
+                      : 'hover:bg-white/[0.05]'
+                  }`}
+                  onClick={() => handleTrackChange(idx)}
                 >
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-white text-sm truncate">{meditation.title}</h4>
-                  <p className="text-muted-foreground text-xs">{meditation.duration}</p>
-                </div>
-                <button 
-                  className="w-9 h-9 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center transition-all hover:bg-white/15 flex-shrink-0"
-                >
-                  <Play className="w-4 h-4 text-white ml-0.5" />
+                  <div 
+                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: meditation.gradient
+                    }}
+                  >
+                    {idx === currentTrack && isPlaying ? (
+                      <Pause className="w-4 h-4 text-white" fill="white" />
+                    ) : (
+                      <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0 text-left">
+                    <h4 className="text-white text-sm truncate">{meditation.title}</h4>
+                    <p className="text-muted-foreground text-xs">{meditation.duration}</p>
+                  </div>
                 </button>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
-
-        <div className="space-y-2 mb-5">
-          <div className="bg-white/[0.08] rounded-full h-1">
-            <div 
-              className="h-full rounded-full transition-all duration-100"
-              style={{
-                background: meditations[currentTrack].gradient,
-                width: `${progress}%`
-              }}
-            ></div>
-          </div>
-          <div className="flex justify-between text-xs text-muted-foreground px-1">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration)}</span>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center gap-6">
-          <button 
-            onClick={() => setCurrentTrack(prev => prev > 0 ? prev - 1 : meditations.length - 1)}
-            className="text-white hover:opacity-70 transition-opacity"
-          >
-            <SkipBack className="w-6 h-6" />
-          </button>
-          <button 
-            onClick={handlePlayPause}
-            className="w-14 h-14 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center transition-all hover:bg-white/15"
-          >
-            {isPlaying ? (
-              <Pause className="w-6 h-6 text-white" fill="currentColor" />
-            ) : (
-              <Play className="w-6 h-6 text-white ml-0.5" />
-            )}
-          </button>
-          <button 
-            onClick={() => setCurrentTrack(prev => prev < meditations.length - 1 ? prev + 1 : 0)}
-            className="text-white hover:opacity-70 transition-opacity"
-          >
-            <SkipForward className="w-6 h-6" />
-          </button>
-        </div>
       </div>
       
       <audio ref={audioRef} loop />
