@@ -1,6 +1,5 @@
 import { ExternalLink } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
-import resortImage from "figma:asset/f275ac23ca7a7d6764d49ace45af429be5264bbe.png";
 
 export function AdBanner() {
   const { language } = useLanguage();
@@ -31,7 +30,7 @@ export function AdBanner() {
       {/* Image Section */}
       <div className="relative h-32 overflow-hidden">
         <img
-          src={resortImage}
+          src="/assets/banner.jpg"
           alt="Resort"
           className="w-full h-full object-cover object-center"
         />
